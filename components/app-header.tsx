@@ -1,9 +1,10 @@
 "use client"
 
-import { Bell, Menu, User } from "lucide-react"
+import { Bell, Menu, User, Languages } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Sprout } from "lucide-react"
 import { useState } from "react"
+import { useLanguage } from "@/lib/language-context"
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -15,6 +16,7 @@ import {
 
 export function AppHeader({ onMenuClick }: { onMenuClick?: () => void }) {
   const [notificationOpen, setNotificationOpen] = useState(false)
+  const { language, setLanguage, t } = useLanguage()
 
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-white">
@@ -27,10 +29,31 @@ export function AppHeader({ onMenuClick }: { onMenuClick?: () => void }) {
           <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-[var(--agri-green)]">
             <Sprout className="h-6 w-6 text-white" />
           </div>
-          <span className="text-xl font-semibold text-foreground hidden sm:inline">AgriPredict</span>
+          <span className="text-xl font-semibold text-foreground hidden sm:inline">{t("agriPredict")}</span>
         </div>
 
         <div className="ml-auto flex items-center gap-2">
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="ghost" size="icon">
+                <Languages className="h-5 w-5" />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end">
+              <DropdownMenuLabel>Select Language</DropdownMenuLabel>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem onClick={() => setLanguage("en")} className={language === "en" ? "bg-accent" : ""}>
+                English
+              </DropdownMenuItem>
+              <DropdownMenuItem onClick={() => setLanguage("hi")} className={language === "hi" ? "bg-accent" : ""}>
+                हिन्दी (Hindi)
+              </DropdownMenuItem>
+              <DropdownMenuItem onClick={() => setLanguage("or")} className={language === "or" ? "bg-accent" : ""}>
+                ଓଡ଼ିଆ (Odia)
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+
           <DropdownMenu open={notificationOpen} onOpenChange={setNotificationOpen}>
             <DropdownMenuTrigger asChild>
               <Button variant="ghost" size="icon" className="relative">
@@ -39,7 +62,7 @@ export function AppHeader({ onMenuClick }: { onMenuClick?: () => void }) {
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end" className="w-80">
-              <DropdownMenuLabel>Notifications</DropdownMenuLabel>
+              <DropdownMenuLabel>{t("notifications")}</DropdownMenuLabel>
               <DropdownMenuSeparator />
               <DropdownMenuItem className="flex flex-col items-start gap-1 p-3">
                 <p className="font-medium text-sm">Weather Alert</p>
@@ -59,12 +82,12 @@ export function AppHeader({ onMenuClick }: { onMenuClick?: () => void }) {
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
-              <DropdownMenuLabel>My Account</DropdownMenuLabel>
+              <DropdownMenuLabel>{t("myAccount")}</DropdownMenuLabel>
               <DropdownMenuSeparator />
-              <DropdownMenuItem>Profile</DropdownMenuItem>
-              <DropdownMenuItem>Settings</DropdownMenuItem>
+              <DropdownMenuItem>{t("profile")}</DropdownMenuItem>
+              <DropdownMenuItem>{t("settings")}</DropdownMenuItem>
               <DropdownMenuSeparator />
-              <DropdownMenuItem>Logout</DropdownMenuItem>
+              <DropdownMenuItem>{t("logout")}</DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
         </div>

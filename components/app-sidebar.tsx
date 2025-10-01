@@ -2,22 +2,25 @@
 
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { Home, MapPin, Database, Brain, BarChart3, Shield, Sprout, Bell, TrendingUp, X } from "lucide-react"
+import { Home, MapPin, Database, Brain, BarChart3, Shield, Sprout, Bell, TrendingUp, X, CloudSun } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import { useEffect } from "react"
-
-const navigation = [
-  { name: "Dashboard", href: "/", icon: Home },
-  { name: "My Farms", href: "/farms", icon: MapPin },
-  { name: "Data Entry", href: "/data-entry", icon: Database },
-  { name: "Predictions", href: "/predictions", icon: Brain },
-  { name: "Analytics", href: "/analytics", icon: BarChart3 },
-  { name: "Admin Panel", href: "/admin", icon: Shield },
-]
+import { useLanguage } from "@/lib/language-context"
 
 export function AppSidebar({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) {
   const pathname = usePathname()
+  const { t } = useLanguage()
+
+  const navigation = [
+    { name: t("dashboard"), href: "/", icon: Home },
+    { name: t("myFarms"), href: "/farms", icon: MapPin },
+    { name: t("dataEntry"), href: "/data-entry", icon: Database },
+    { name: t("weatherForecast"), href: "/weather-forecast", icon: CloudSun },
+    { name: t("aiPredictions"), href: "/predictions", icon: Brain },
+    { name: t("analytics"), href: "/analytics", icon: BarChart3 },
+    { name: t("adminDashboard"), href: "/admin", icon: Shield },
+  ]
 
   useEffect(() => {
     onClose()
@@ -60,8 +63,8 @@ export function AppSidebar({ isOpen, onClose }: { isOpen: boolean; onClose: () =
               <Sprout className="h-7 w-7 text-white" />
             </div>
             <div>
-              <h2 className="font-semibold text-lg text-foreground">AgriPredict</h2>
-              <p className="text-xs text-[var(--agri-green)]">AI-Powered Farming</p>
+              <h2 className="font-semibold text-lg text-foreground">{t("agriPredict")}</h2>
+              <p className="text-xs text-[var(--agri-green)]">{t("aiPoweredFarming")}</p>
             </div>
           </div>
 
